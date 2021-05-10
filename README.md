@@ -1,6 +1,6 @@
 # 5: CNN on Cultural Image Data
 
-> Mutli-class classification of impressionist paintings using a convolutional neural network with LeNet architechture.
+> Classifying mpressionist paintings using a CNN with LeNet architechture.
 > [Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion) |
 
 ## Description
@@ -20,7 +20,7 @@ To train the CNN, it was required to resize all images to be of same size. To pr
 ### Convolutional Neural Network with LeNet Architecture
 Convolutional Neural Networks are especially useful for visual analytics, as they can take into account the three channels of coloured images, and identify more complex features (through convolutional kernels), while reducing dimensionality (through pooling layers). A LeNet CNN consists of two sets of  *Convolutional Layer - Activation Layer - Pooling layer*, and a fully connected layer, to uses the extracted features to predict the possible lables (here: artists). Below is the visualisation of the model architecture used in this project: 
 
-![https://github.com/nicole-dwenger/cdsvisual-cnn-paintings/blob/master/out/model_plot.png]
+![](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png)
 
 
 ## Repository Structure
@@ -106,7 +106,7 @@ __Parameters__:
 - *-train, --train_directory : str, optional, default:* `../data/impressionist_subset/training/`\
    Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist. 
 
-- *-test, --train_directory : str, optional, default:* `../data/impressionist_subset/validation/`\
+- *-test, --test_directory : str, optional, default:* `../data/impressionist_subset/validation/`\
    Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist. 
 
 - *-e, --epochs : int, optional, default:* `10`\
@@ -130,7 +130,13 @@ __Output:__
 
 ## Results and Discussion
 
-The classification report indicates, that the model achieved an weighted F1 score of X when classifying paintings from  Matisse, Gauguin and VanGogh. The model history plot inidicates, that ...
+The classification report indicates, that the model, which was trained for 30 epochs with a batch size of 30, achieved an weighted F1 score of 0.64 when classifying paintings from  Matisse, Gauguin and VanGogh. The plot of the model history indicates, that the accuracy for the training increases over epochs, while the loss decreases. However, there is a lot of variability and noise in the validation loss and accuracy. This might indicate, that the model is overfitted on the training data, so that even though it becomes better at classifying the training data, it does not improve on classifying the testing data. This could potentially be reduced by using drop out layers, regularisation or data augmentation. 
+
+__Model History Plot:__
+![](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history.png)
+
+
+
 
 
 
