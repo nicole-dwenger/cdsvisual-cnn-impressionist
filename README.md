@@ -1,6 +1,7 @@
 # 5: CNN on Cultural Image Data
 
 > Classifying mpressionist paintings using a CNN with LeNet architechture.
+
 > [Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion) |
 
 ## Description
@@ -18,9 +19,7 @@ The data used to train and evaluate the model was extracted from [kaggle](https:
 To train the CNN, it was required to resize all images to be of same size. To preserve as much as possible, the smallest dimension of the smallest image was found and used to resize all images to a square of this dimension. Further, images were saved in arrays and normalised. The corresponding labels of the images (i.e. their artists) were extracted, and binarised to be used in the CNN. 
 
 ### Convolutional Neural Network with LeNet Architecture
-Convolutional Neural Networks are especially useful for visual analytics, as they can take into account the three channels of coloured images, and identify more complex features (through convolutional kernels), while reducing dimensionality (through pooling layers). A LeNet CNN consists of two sets of  *Convolutional Layer - Activation Layer - Pooling layer*, and a fully connected layer, to uses the extracted features to predict the possible lables (here: artists). Below is the visualisation of the model architecture used in this project: 
-
-![](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png)
+Convolutional Neural Networks are especially useful for visual analytics, as they can take into account the three channels of coloured images, and identify more complex features (through convolutional kernels), while reducing dimensionality (through pooling layers). A LeNet CNN consists of two sets of  *Convolutional Layer - Activation Layer - Pooling layer*, and a fully connected layer, to uses the extracted features to predict the possible lables (here: artists). A summary and visualisation of the model architecture can be found in the out/ directory: [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.png), [model plot](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png)
 
 
 ## Repository Structure
@@ -133,7 +132,9 @@ __Output:__
 The classification report indicates, that the model, which was trained for 30 epochs with a batch size of 30, achieved an weighted F1 score of 0.64 when classifying paintings from  Matisse, Gauguin and VanGogh. The plot of the model history indicates, that the accuracy for the training increases over epochs, while the loss decreases. However, there is a lot of variability and noise in the validation loss and accuracy. This might indicate, that the model is overfitted on the training data, so that even though it becomes better at classifying the training data, it does not improve on classifying the testing data. This could potentially be reduced by using drop out layers, regularisation or data augmentation. 
 
 __Model History Plot:__
-![](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history.png)
+
+<img src="https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history.png" alt="plot" width="400"/>
+
 
 
 
