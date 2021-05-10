@@ -1,12 +1,10 @@
 # 5: CNN on Cultural Image Data
 
-> Classifying mpressionist paintings using a CNN with LeNet architechture.
-
 > [Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion) |
 
 ## Description
 
-> This project related to Assignment 5: Multi-class Classifcation of Cultural Image Data
+> This project related to Assignment 5: Multi-class Classification of Cultural Image Data
 
 The purpose of this project was to classify impressionist paintings by their artist. Developing a tool to classify paintings can be used to e.g. sort a large collection of images or to predict the artist of a painting where the artist is unknown. Further, it may also be relevant in cultural research, e.g. to investigate similarities and differences between paintings. For this multi-class classification, a convolutional neural network (CNN) with a LeNet architecture was build. I chose to only investigate paintings of three artists, namely Matisse, Gauguin and VanGogh. 
  
