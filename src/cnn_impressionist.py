@@ -25,7 +25,7 @@ import argparse
 # Utility functions
 sys.path.append(os.path.join(".."))
 from utils.cnn_utils import (get_min_dim, preprocess_data,
-                             save_model_summary, save_model_history, save_model_report)
+                             save_model_info, save_model_history, save_model_report)
              
 
 # CNN Model
@@ -48,10 +48,10 @@ def main():
                     required = False, default = ["Matisse", "Gauguin", "VanGogh"])
     # Input option for path to training data
     ap.add_argument("-train", "--train_directory", type = str, help = "Path to the training data directory",
-                    required = False, default = "../data/impressionist/training/training/")
+                    required = False, default = "../data/impressionist/training/")
     # Input option for path to test data
     ap.add_argument("-test", "--test_directory", type = str, help = "Path to the test data directory",
-                    required = False, default = "../data/impressionist/validation/validation/")
+                    required = False, default = "../data/impressionist/validation/")
     # Input option option for number of epoch
     ap.add_argument("-e", "--epochs", type = int, help = "The number of epochs to train the model",
                     required = False, default = 10)
@@ -122,16 +122,16 @@ def main():
     
     # Train CNN: use training data to learn weights, using defined batch_size and epochs
     history = model.fit(X_train, y_train, validation_data = (X_test, y_test), 
-                        batch_size = batch_size, epochs = epochs, verbose = 10)
+                        batch_size = batch_size, epochs = epochs, verbose = 1)
     
     # Evaluate CNN: generate predictions and compare to true labels
     predictions = model.predict(X_test, batch_size)
     report = classification_report(y_test.argmax(axis=1), predictions.argmax(axis=1), target_names = names)
     
     # Save model summary, model history and classification report
-    save_model_summary(model, output_directory)
-    save_model_history(history, epochs, output_directory)
-    save_model_report(report, epochs, batch_size, output_directory)
+    save_model_info(model, output_directory, "model_summary.txt", "model_plot.png")
+    save_model_history(history, epochs, output_directory, "model_history.png")
+    save_model_report(report, epochs, batch_size, output_directory, "model_report.txt")
     
     # Print classification report
     print(f"Classification report:\n {report}")

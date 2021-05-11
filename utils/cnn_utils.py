@@ -101,36 +101,65 @@ def preprocess_data(directory, img_dim, names):
     return X_norm, y_binary
 
 
-def save_model_summary(model, output_directory):
+def unique_path(filepath):
+    """Creating unique filepath/filename by incrementing filename, if the filename exists already 
+    
+    Input:
+    - desired filepath
+    Returns:
+    - if path does not exist: desired filepath
+    - if path exists: desired filepath, enumerated
+    """ 
+    # If the path does not exist, keep the original filepath
+    if not os.path.exists(filepath):
+        return filepath
+    
+    # Otherwise, split the path, and append a number that does not exist already, return the new path
+    else:
+        i = 1
+        path, ext = os.path.splitext(filepath)
+        new_path = "{}_{}{}".format(path, i, ext)
+        
+        while os.path.exists(new_path):
+            i += 1
+            new_path = "{}_{}{}".format(path, i, ext)
+            
+        return new_path
+
+
+def save_model_info(model, output_directory, filename_summary, filename_plot):
     """Save model summary in .txt file and plot of model in .png
     
     Input:
     - model: compiled model
     - output_directory: path to output directory
+    - filename_summary: name of file to save summary in
+    - filename_plot: name of file to save visualisation of model
     """
     # Define path fand filename for model summary
-    out_summary = os.path.join(output_directory, "model_summary.txt")
+    out_summary = unique_path(os.path.join(output_directory, filename_summary))
     # Save model summary in defined file
     with open(out_summary, "w") as file:
         with redirect_stdout(file):
             model.summary()
 
     # Define path and filename for model plot
-    out_plot = os.path.join(output_directory, "model_plot.png")
+    out_plot = unique_path(os.path.join(output_directory, filename_plot))
     # Save model plot in defined file
     plot_model(model, to_file = out_plot, show_shapes = True, show_layer_names = True)
     
     
-def save_model_history(history, epochs, output_directory):
+def save_model_history(history, epochs, output_directory, filename):
     """Plotting the model history, i.e. loss/accuracy of the model during training
     
     Input: 
     - history: model history
     - epochs: number of epochs the model was trained on 
     - output_directory: desired output directory
+    - filename: name of file to save history in
     """
     # Define output path
-    out_history = os.path.join(output_directory, "model_history.png")
+    out_history = unique_path(os.path.join(output_directory, filename))
 
     # Visualize history
     plt.style.use("fivethirtyeight")
@@ -147,18 +176,19 @@ def save_model_history(history, epochs, output_directory):
     plt.savefig(out_history)
 
 
-def save_model_report(report, epochs, batch_size, output_directory):
+def save_model_report(report, epochs, batch_size, output_directory, filename):
     """Save report to output directory
     
     Input: 
     - report: model classifcation report
     - output_directory: final output_directory
+    - filename: name of file to save report in
     """
     # Define output path and file for report
-    report_out = os.path.join(output_directory, "classification_report.txt")
+    report_out = unique_path(os.path.join(output_directory, filename))
     # Save report in defined path
     with open(report_out, 'w', encoding='utf-8') as file:
-        file.writelines(f"Classification report for CNN trained with {epochs} epochs and batchsize of {batch_size}:")
+        file.writelines(f"Classification report for CNN trained with {epochs} epochs and batchsize of {batch_size}:\n")
         file.writelines(report) 
     
 

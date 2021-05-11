@@ -1,45 +1,46 @@
 # 5: CNN on Cultural Image Data
 
-> [Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion) |
+[Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion) |
 
 ## Description
 
 > This project related to Assignment 5: Multi-class Classification of Cultural Image Data
 
-The purpose of this project was to classify impressionist paintings by their artist. Developing a tool to classify paintings can be used to e.g. sort a large collection of images or to predict the artist of a painting where the artist is unknown. Further, it may also be relevant in cultural research, e.g. to investigate similarities and differences between paintings. For this multi-class classification, a convolutional neural network (CNN) with a LeNet architecture was build. I chose to only investigate paintings of three artists, namely Matisse, Gauguin and VanGogh. 
+The aim of this project was to classify complex, cultural image data. Specifically, a dataset of impressionist paintings was used to investigate whether it is possible to classify paintings by their artist. This may be relevant to e.g. sort a large collection of images or to predict the artist of an image where the artist is unknown. In this project, I chose to only investigate paintings of three artists, namely *Matisse, Gaugin and VanGogh*. 
+
+For the multi-class classification task, a Convolutional Neural Network (CNN) with a LeNet Architecture was build, trained and evaluated. Convolutional Neural Networks are especially useful for visual analytics, as they can take into account the three channels of coloured images, and identify more complex features (through convolutional kernels), while reducing dimensionality of the feature space (through pooling layers).  
  
 
 ## Methods
-### Data 
-The data used to train and evaluate the model was extracted from [kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data). This original dataset contains 400 training and 100 test images for 10 artists (Pisarro, Hassam, Monet, Degas, Matisse, Singer-Sargent, Cezanne, Gauguin, Renoir, van Gogh). To reduce processing time, I chose to only investigate three of these artists in this project, namely: Matisse, Gaugin, VanGogh. 
-
-### Preprocessing
-To train the CNN, it was required to resize all images to be of same size. To preserve as much as possible, the smallest dimension of the smallest image was found and used to resize all images to a square of this dimension. Further, images were saved in arrays and normalised. The corresponding labels of the images (i.e. their artists) were extracted, and binarised to be used in the CNN. 
-
+### Data and Preprocessing
+The data used to train and evaluate the model was extracted from [Kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data). This original dataset contains 400 training and 100 test images for 10 artists (Pisarro, Hassam, Monet, Degas, Matisse, Singer-Sargent, Cezanne, Gauguin, Renoir, van Gogh). To reduce processing time, I chose to only investigate 3 of these artists in this project, namely Matisse, Gaugin, Van Gogh. 
+To train the CNN, it was required to resize all images to be of same size. To preserve as much as possible, the smallest dimension of the smallest image was found and used to resize all images to a square of this dimension. For this project, this meant all images were reseized to 277x277. Further, images were saved in arrays and normalised. The corresponding labels of the images (i.e. their artists) were extracted, and binarised to be used in the CNN. 
+ 
 ### Convolutional Neural Network with LeNet Architecture
-Convolutional Neural Networks are especially useful for visual analytics, as they can take into account the three channels of coloured images, and identify more complex features (through convolutional kernels), while reducing dimensionality (through pooling layers). A LeNet CNN consists of two sets of  *Convolutional Layer - Activation Layer - Pooling layer*, and a fully connected layer, to uses the extracted features to predict the possible lables (here: artists). A summary and visualisation of the model architecture can be found in the out/ directory: [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.png), [model plot](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png)
+A Convolutional Neural Network with a LeNet Architecture consists of an input layer, followed by 2 sets of **Convolutional Layer - Activation Layer - Pooling layer**, a flattening layer, two fully connected layers and finally a softmax classifier to predict the artist. The model was trained on a batch size of 50, once over 10 epochs and once over 15 epochs. As optimiser, stochastic gradient descent with a learning rate of 0.1 was used. The [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.png) and a [visualisation of the model]((https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png)) used for this project can be found in the out/ directory in this repository.
 
 
 ## Repository Structure
 
+Note, that the data directory only contains empty folders. The data is too large to be stored on GitHub. The directory only serve to illustrate how the data should be stored to run the script. Directions for downloading the data are provided below. 
+
 ```
 |-- data/                        # Directory containing data
-    |-- impressionist_sample/    # Example dataset to test functionality of script
-        |-- training/            # Training data
-            |-- Matisse/         # Subdirectory for artist 1
-                |-- img1
-                |-- img2
-                |-- ...
-            |-- Gauguin/         # Subdirectory for artist 2
-            |-- Van Gogh/        # Subdirectory for artist 3
+    |-- impressionist_example/   # Example directory of how data should be structured
+        |-- training/            # Example training data directory
+            |-- Matisse/         # Example subdirectory for artist 1
+            |-- Gauguin/         # Example subdirectory for artist 2
+            |-- Van Gogh/        # Example subdirectory for artist 2
             |-- ...
-        |-- validation/          # Validation data, with same structure as training data directory
+        |-- validation/          # example validation data directory 
 
-|-- out/                         # Output directory
+|-- out/                         # Output directory, with example output
     |-- model_summary.txt        # Summary of model architecture
-    |-- model_plot.png           # Visualisation of model architectur
-    |-- model_history.png        # Plot of training history of model
-    |-- model_report.txt         # Classification report
+    |-- model_plot.png           # Visualisation of model architecture
+    |-- model_history.png        # Plot of training history of model (over 10 epochs)
+    |-- model_history_1.png      # Plot of training history of model (over 15 epochs)
+    |-- model_report.txt         # Classification report (over 10 epochs)
+    |-- model_report_1.txt.      # Classification report (over 15 epochs)
 
 |-- src/                         # Directory containing main script for classification
     |-- cnn_impressionist.py     # Main script for preparing data, training and evaluating CNN
@@ -62,10 +63,10 @@ To run the scripts, I recommend cloning this repository and installing necessary
 
 ```bash
 # cloning the repository
-git clone https://github.com/nicole-dwenger/cdsvisual-cnn-artists.git
+git clone https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist.git
 
 # move into directory
-cd cdsvisual-cnn-artists/
+cd cdsvisual-cnn-impressionist/
 
 # install virtual environment
 bash create_venv.sh
@@ -75,13 +76,12 @@ source venv_cnn/bin/activate
 ```
 
 ### 2. Data
-If you wish to reproduce the results of this project, I recommend downloading the dataset of impressionist paintings from  [kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data), storing it in the `data` directory and adjusting the  `-train` and `-test` parameters accordingly. The `-train` and `-test` parameters should specify the directory containing the subdirectories names by the artist (i.e. in the repository structure above this would be `../data/impressionist_subset/training/` and `../data/impressionist_subset/validation/`). I have trained the model on the entire set of training and testing images for the three chosen artists. 
-If you simply want to run the script to test its functionality, I have provided a sample of images in the `impressionist_sample` directory. 
+The data was too large to be stored in this repository. If you wish to reproduce the results of this project, I recommend downloading the *training* and *validation* folders of the impressionist paintings dataset from [kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data), and saving these in `data/impressionist`. Optimally, the structure should be identical to the structure illustrated in the repository structure displayed above. When running the script, you can adjust the `-train` and `-test` parameters to represent the directories containing the training and validation data, i.e. i.e. in the repository structure above this would be `../data/impressionist_example/training/` and `../data/impressionist_example/validation/`. For this project, I have trained the model on the entire set of 400 training and 100 testing images for the three chosen artists, i.e. Matisse, Gauguin, VanGogh. 
 
 
 ### 3. Running the Script 
 
-The script `cnn_impressionist.py` preprocesses the data, trains the model and evaluates the model. The script should be called from the `src/` directory. Example commands are provided below. 
+The script `cnn_impressionist.py` preprocesses the data, trains the model and evaluates the model. The script should be called from the `src/` directory:
 
 __Example:__
 ```bash
@@ -89,10 +89,10 @@ __Example:__
 cd src/
 
 # running script with default parameters
-python3 cnn_impressionist.py
+python3 cnn_impressionist.py 
 
 # running script with specified parameters
-python3 cnn_impressionist.py -a Monet VanGogh Matisse -e 20
+python3 cnn_impressionist.py -train data/training/ -test data/validation/ -a Monet VanGogh Matisse -e 20
 ```
 
 __Parameters__:
@@ -100,39 +100,41 @@ __Parameters__:
    List of artist names for which the paintings should be included in the classifier. Should be at least 3, and should their 
    corresponding train and test images should be stored in a directory names by the artist in `training` and `validation`. 
    
-- *-train, --train_directory : str, optional, default:* `../data/impressionist_subset/training/`\
-   Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist. 
+- *-train, --train_directory : str, optional, default:* `../data/impressionist/training/`\
+   Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist.
 
-- *-test, --test_directory : str, optional, default:* `../data/impressionist_subset/validation/`\
-   Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist. 
+- *-test, --test_directory : str, optional, default:* `../data/impressionist/validation/`\
+   Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist.
 
 - *-e, --epochs : int, optional, default:* `10`\
    Number of epochs to train the model. 
 
-- *-b, --batch_size : int, optional, default:* `30`\
+- *-b, --batch_size : int, optional, default:* `50`\
    Size of batch to train model. 
 
 __Output:__
 - *model_summary.txt*\
-    Summary of model architecture and number of parameters.
+    Summary of model architecture and number of parameters. If the file exists already, a number will be added to the filename to avoid overwriting. 
 
 - *model_plot.png*\
-   Visualisation of model architecture, i.e. layers. 
+   Visualisation of model architecture, i.e. layers. If the file exists already, a number will be added to the filename to avoid overwriting. 
 
 - *model_history.png*\
-   Training history of model, i.e. training and validation loss and accuracy over epochs. 
+   Training history of model, i.e. training and validation loss and accuracy over epochs. If the file exists already, a number will be added to the filename to avoid overwriting. 
 
 - *model_report.txt*\
-   Classification report of the model. Also printed to command line. 
+   Classification report of the model. If the file exists already, a number will be added to the filename to avoid overwriting. Also printed to command line. 
 
 ## Results and Discussion
 
-The classification report indicates, that the model, which was trained for 30 epochs with a batch size of 30, achieved an weighted F1 score of 0.64 when classifying paintings from  Matisse, Gauguin and VanGogh. The plot of the model history indicates, that the accuracy for the training increases over epochs, while the loss decreases. However, there is a lot of variability and noise in the validation loss and accuracy. This might indicate, that the model is overfitted on the training data, so that even though it becomes better at classifying the training data, it does not improve on classifying the testing data. This could potentially be reduced by using drop out layers, regularisation or data augmentation. 
+Outputs of the model can be found in the `out/` directory of this repository. The classification report of the model trained over 10 epochs indicated a weighted F1 score of 0.59, while the model trained over 15 epochs led to a weighted F1 score of 0.51, when classfying paintings of Matisse, Gauguin and VanGogh. 
 
-__Model History Plot:__
+Looking at the model history, it seems that the model trained over 15 epochs (displayed on the left) started overfitting on the training data, as the accuracy decreases for the test data, while it keeps increasing for the training data. Thus, in early stopping after 10 epochs (displayed on the right) could prevent this overfitting, and might thus lead to a higher F1 score for the model trained over 10 epochs. 
 
-<img src="https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history.png" alt="plot" width="400"/>
+<img src="https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history_1.png" alt="plot" width="200"/>
+<img src="https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history.png" alt="plot" width="200"/>
 
+The recall scores for the model trained over 10 epochs indicate, a higher recall score for Van Gogh (0.87) compared to Matisse (0.45) and Gaugin (0.46). This suggests, that the model was better at finding all paintings, which were actually Van Gogh paintings, compared to the other two. However, it seems that this came at the cost of precision, as Van Gogh has a lower precision score (0.49) than the reamining to (Matisse: 0.75, Gauguin: 0.77), indicating that out of all the paintings predicted to be van Gogh only 49% were actually from Van Gogh.
 
 
 
