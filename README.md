@@ -98,7 +98,7 @@ python3 cnn_impressionist.py -train data/training/ -test data/validation/ -a Mon
 __Parameters__:
 - *-a, --artists : list of str, seperated with space, optional, default:* `Matisse Gaugin VanGogh`\
    List of artist names for which the paintings should be included in the classifier. Should be at least 3, and should their 
-   corresponding train and test images should be stored in a directory names by the artist in `training` and `validation`. 
+   corresponding train and test images should be stored in a directory named by the artist in `training` and `validation` directories.
    
 - *-train, --train_directory : str, optional, default:* `../data/impressionist/training/`\
    Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist.
@@ -129,10 +129,12 @@ __Output:__
 
 Outputs of the model can be found in the `out/` directory of this repository. The classification report of the model trained over 10 epochs indicated a weighted F1 score of 0.59, while the model trained over 15 epochs led to a weighted F1 score of 0.51, when classfying paintings of Matisse, Gauguin and VanGogh. 
 
-Looking at the model history, it seems that the model trained over 15 epochs (displayed on the left) started overfitting on the training data, as the accuracy decreases for the test data, while it keeps increasing for the training data. Thus, in early stopping after 10 epochs (displayed on the right) could prevent this overfitting, and might thus lead to a higher F1 score for the model trained over 10 epochs. 
+Looking at the model history, it seems that the model trained over 15 epochs (displayed on the left) started overfitting on the training data, as the accuracy decreases for the test data, while it keeps increasing for the training data. Thus, in early stopping after 10 epochs (displayed on the right) could prevent this overfitting, and might thus lead to a higher F1 score for the model trained over 10 epochs. However, there still seems to be some variablity and noise in the validation accuracy and loss. 
 
-<img src="https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history_1.png" alt="plot" width="200"/>
-<img src="https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history.png" alt="plot" width="200"/>
+ 15 epochs | 10 epochs
+:-------------------------:|:-------------------------:
+![](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history_1.png)  |  ![](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history.png)
+
 
 The recall scores for the model trained over 10 epochs indicate, a higher recall score for Van Gogh (0.87) compared to Matisse (0.45) and Gaugin (0.46). This suggests, that the model was better at finding all paintings, which were actually Van Gogh paintings, compared to the other two. However, it seems that this came at the cost of precision, as Van Gogh has a lower precision score (0.49) than the reamining to (Matisse: 0.75, Gauguin: 0.77), indicating that out of all the paintings predicted to be van Gogh only 49% were actually from Van Gogh.
 
