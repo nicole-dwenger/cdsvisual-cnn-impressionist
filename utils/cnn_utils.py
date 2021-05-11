@@ -3,11 +3,10 @@
 """
 Utility script with functions used in cnn_impressionist.py script 
 
-DATA PREPARATION
+Functions in this script:
   - get_min_dim(): get minimum dimension of images in train and test directory
   - preprocess_data(): preprocess data in train and test directory to retrieve images (X) and labels (y)
-
-MODEL HELPER FUNCTIONS
+  - unique_path(): enumerates filename, if file exists already 
   - save_model_summary(): save model summary and visualisation of model summary
   - save_model_history(): save plot of training history
   - save_model_report(): save file of classifcation report
@@ -35,7 +34,7 @@ from tensorflow.keras.utils import plot_model
 from tensorflow.keras import backend as K
 
 
-# MODEL HELPER FUNCTIONS ------------------------------------
+# UTILITY FUNCTIONS ------------------------------------
 
 def get_min_dim(train_directory, test_directory, names):
     """Getting dimension of the smallest image in test and train data
@@ -61,7 +60,6 @@ def get_min_dim(train_directory, test_directory, names):
             dimensions.extend(img.size)                               
     
     return min(dimensions)
-
 
 def preprocess_data(directory, img_dim, names):
     """Create array of resized and normalised images (X) and binarised labels (y) 
@@ -100,12 +98,12 @@ def preprocess_data(directory, img_dim, names):
    
     return X_norm, y_binary
 
-
 def unique_path(filepath):
     """Creating unique filepath/filename by incrementing filename, if the filename exists already 
     
     Input:
     - desired filepath
+    
     Returns:
     - if path does not exist: desired filepath
     - if path exists: desired filepath, enumerated
@@ -125,7 +123,6 @@ def unique_path(filepath):
             new_path = "{}_{}{}".format(path, i, ext)
             
         return new_path
-
 
 def save_model_info(model, output_directory, filename_summary, filename_plot):
     """Save model summary in .txt file and plot of model in .png
@@ -147,8 +144,7 @@ def save_model_info(model, output_directory, filename_summary, filename_plot):
     out_plot = unique_path(os.path.join(output_directory, filename_plot))
     # Save model plot in defined file
     plot_model(model, to_file = out_plot, show_shapes = True, show_layer_names = True)
-    
-    
+     
 def save_model_history(history, epochs, output_directory, filename):
     """Plotting the model history, i.e. loss/accuracy of the model during training
     
@@ -174,7 +170,6 @@ def save_model_history(history, epochs, output_directory, filename):
     plt.legend()
     plt.tight_layout()
     plt.savefig(out_history)
-
 
 def save_model_report(report, epochs, batch_size, output_directory, filename):
     """Save report to output directory
