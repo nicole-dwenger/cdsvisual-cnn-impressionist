@@ -10,9 +10,11 @@ Input:
   - -e, --epochs: int, <number-of-epochs> (optional, default: 10)
   - -b, --batch_size: int, <batch-size> (optional, default: 50)
 
-Output:
-  - Classifcation report saved as classification_report.txt in out/
-
+Output (saved in out/)
+  - model_summary.txt: summary of model architecture
+  - model_plot.png: visualisation of model architecture
+  - model_history.png: model training history
+  - model_report.txt: classification report of model, also printed to command line 
 """
 
 # LIBRARIES ------------------------------------
