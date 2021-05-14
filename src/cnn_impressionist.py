@@ -82,7 +82,7 @@ def main():
     img_dim = get_min_dim(train_directory, test_directory, names)
     
     # Print message
-    print(f"\n[INFO] Preparing data: all images will be resized to {img_dim}x{img_dim}")
+    print(f"\n[INFO] Preparing data: all images will be resized to {img_dim}x{img_dim}.")
     
     # Prepare data, returns resized, normalised array of images, and binarised labels
     X_train, y_train = preprocess_data(train_directory, img_dim, names)

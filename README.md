@@ -1,6 +1,6 @@
 # 5: CNN on Cultural Image Data
 
-[Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion) |
+[Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion)
 
 ## Description
 
@@ -14,10 +14,10 @@ For the multi-class classification task, a Convolutional Neural Network (CNN) wi
 ## Methods
 ### Data and Preprocessing
 The data used to train and evaluate the model was extracted from [Kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data). This original dataset contains 400 training and 100 test images for 10 artists (Pisarro, Hassam, Monet, Degas, Matisse, Singer-Sargent, Cezanne, Gauguin, Renoir, van Gogh). To reduce processing time, I chose to only investigate 3 of these artists in this project, namely Matisse, Gaugin, Van Gogh. 
-To train the CNN, it was required to resize all images to be of same size. To preserve as much as possible, the smallest dimension of the smallest image was found and used to resize all images to a square of this dimension. For this project, this meant all images were reseized to 277x277. Further, images were saved in arrays and normalised. The corresponding labels of the images (i.e. their artists) were extracted, and binarised to be used in the CNN. 
+To train the CNN, it was required to resize all images to be of same size. To preserve as much as possible, the smallest dimension of the smallest image was found and used to resize all images to a square of this dimension. For the subset of data used for this project, this meant that all images were resized to be of size 277x277. Further, images were normalised. The corresponding labels of the images (artists) were extracted, and binarised.
  
 ### Convolutional Neural Network with LeNet Architecture
-A Convolutional Neural Network with a LeNet Architecture consists of an input layer, followed by 2 sets of **Convolutional Layer - Activation Layer - Pooling layer**, a flattening layer, two fully connected layers and finally a softmax classifier to predict the artist. The model was trained on a batch size of 50, once over 10 epochs and once over 15 epochs. As optimiser, stochastic gradient descent with a learning rate of 0.1 was used. The [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.png) and a [visualisation of the model]((https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png)) used for this project can be found in the out/ directory in this repository.
+A Convolutional Neural Network with a LeNet Architecture consists of an input layer, followed by 2 sets of **Convolutional Layer - Activation Layer - Pooling layer**, a flattening layer, two fully connected layers and finally a softmax classifier to predict the artist. The model was trained on a batch size of 50, once over 10 epochs and once over 15 epochs. As optimiser, stochastic gradient descent with a learning rate of 0.01 was used. The [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.png) and a [visualisation of the model]((https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png)) used for this project can be found in the out/ directory in this repository.
 
 
 ## Repository Structure
@@ -96,38 +96,38 @@ python3 cnn_impressionist.py -train data/training/ -test data/validation/ -a Mon
 ```
 
 __Parameters__:
-- *-a, --artists : list of str, seperated with space, optional, default:* `Matisse Gaugin VanGogh`\
+- `-a, --artists`: *list of str, seperated with space, optional, default:* `Matisse Gaugin VanGogh`\
    List of artist names for which the paintings should be included in the classifier. Should be at least 3, and should their 
    corresponding train and test images should be stored in a directory named by the artist in `training` and `validation` directories.
    
-- *-train, --train_directory : str, optional, default:* `../data/impressionist/training/`\
+- `-train, --train_directory`: *str, optional, default:* `../data/impressionist/training/`\
    Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist.
 
-- *-test, --test_directory : str, optional, default:* `../data/impressionist/validation/`\
+- `-test, --test_directory`: *str, optional, default:* `../data/impressionist/validation/`\
    Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist.
 
-- *-e, --epochs : int, optional, default:* `10`\
+- `-e, --epoch`: *int, optional, default:* `10`\
    Number of epochs to train the model. 
 
-- *-b, --batch_size : int, optional, default:* `50`\
+- `-b, --batch_size`: *int, optional, default:* `50`\
    Size of batch to train model. 
 
-__Output:__
-- *model_summary.txt*\
+__Output__ saved in `out/`:
+- `model_summary.txt`\
     Summary of model architecture and number of parameters. If the file exists already, a number will be added to the filename to avoid overwriting. 
 
-- *model_plot.png*\
+- `model_plot.png`\
    Visualisation of model architecture, i.e. layers. If the file exists already, a number will be added to the filename to avoid overwriting. 
 
-- *model_history.png*\
+- `model_history.png`\
    Training history of model, i.e. training and validation loss and accuracy over epochs. If the file exists already, a number will be added to the filename to avoid overwriting. 
 
-- *model_report.txt*\
+- `model_report.txt`\
    Classification report of the model. If the file exists already, a number will be added to the filename to avoid overwriting. Also printed to command line. 
 
 ## Results and Discussion
 
-Outputs of the model can be found in the `out/` directory of this repository. The classification report of the model trained over 10 epochs indicated a weighted F1 score of 0.59, while the model trained over 15 epochs led to a weighted F1 score of 0.51, when classfying paintings of Matisse, Gauguin and VanGogh. 
+Outputs of the model can be found in the `out/` directory of this repository. The classification report of the model trained over 10 epochs indicated a weighted F1 score of 0.59, while the model trained over 15 epochs led to a weighted F1 score of 0.51, when classifying paintings of Matisse, Gauguin and VanGogh. 
 
 Looking at the model history, it seems that the model trained over 15 epochs (displayed on the left) started overfitting on the training data, as the accuracy decreases for the test data, while it keeps increasing for the training data. Thus, in early stopping after 10 epochs (displayed on the right) could prevent this overfitting, and might thus lead to a higher F1 score for the model trained over 10 epochs. However, there still seems to be some variablity and noise in the validation accuracy and loss. 
 
