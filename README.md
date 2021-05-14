@@ -137,7 +137,7 @@ Looking at the model history, it seems that the model trained over 15 epochs (di
 
 The recall scores for the model trained over 10 epochs indicate, a higher recall score for Van Gogh (0.87) compared to Matisse (0.45) and Gaugin (0.46). This suggests, that the model was better at finding all paintings, which were actually Van Gogh paintings, compared to the other two. However, it seems that this came at the cost of precision, as Van Gogh has a lower precision score (0.49) than the reamining to (Matisse: 0.75, Gauguin: 0.77), indicating that out of all the paintings predicted to be van Gogh only 49% were actually from Van Gogh.
 
-
+Rather than using training a CNN from scratch, it could improve classification to use transfer learning, meaning pretrained models, such as VGG16 to classify these images. The pretrained models have been trained to extract relevant features from a large collection of images. Thus, the CNN (as in this project) does not need to be trained from scratch, but only the last fully connected layers would need to be re-trained to classify the artists. 
 
 
 
