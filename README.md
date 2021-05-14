@@ -32,7 +32,7 @@ Note, that the data directory only contains empty folders. The data is too large
             |-- Gauguin/         # Example subdirectory for artist 2
             |-- Van Gogh/        # Example subdirectory for artist 2
             |-- ...
-        |-- validation/          # example validation data directory 
+        |-- validation/          # Example validation data directory, structure identical to training
 
 |-- out/                         # Output directory, with example output
     |-- model_summary.txt        # Summary of model architecture
@@ -83,7 +83,6 @@ The data was too large to be stored in this repository. If you wish to reproduce
 
 The script `cnn_impressionist.py` preprocesses the data, trains the model and evaluates the model. The script should be called from the `src/` directory:
 
-__Example:__
 ```bash
 # moving into src
 cd src/
