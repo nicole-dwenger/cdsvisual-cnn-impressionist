@@ -17,7 +17,7 @@ The data used to train and evaluate the model was extracted from [Kaggle](https:
 To train the CNN, it was required to resize all images to be of same size. To preserve as much as possible, the smallest dimension of the smallest image was found and used to resize all images to a square of this dimension. For the subset of data used for this project, this meant that all images were resized to be of size 277x277. Further, images were normalised. The corresponding labels of the images (artists) were extracted, and binarised.
  
 ### Convolutional Neural Network with LeNet Architecture
-A Convolutional Neural Network with a LeNet Architecture consists of an input layer, followed by 2 sets of **Convolutional Layer - Activation Layer - Pooling layer**, a flattening layer, two fully connected layers and finally a softmax classifier to predict the artist. The model was trained on a batch size of 50, once over 10 epochs and once over 15 epochs. As optimiser, stochastic gradient descent with a learning rate of 0.01 was used. The [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.png) and a [visualisation of the model]((https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png)) used for this project can be found in the out/ directory in this repository.
+A Convolutional Neural Network with a LeNet Architecture consists of an input layer, followed by 2 sets of **Convolutional Layer - Activation Layer - Pooling layer**, a flattening layer, two fully connected layers and finally a softmax classifier to predict the artist. The model was trained on a batch size of 50, once over 10 epochs and once over 15 epochs. As optimiser, stochastic gradient descent with a learning rate of 0.01 was used. The [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.txt) and a [visualisation of the model](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png) used for this project can be found in the out/ directory in this repository.
 
 
 ## Repository Structure
@@ -25,7 +25,7 @@ A Convolutional Neural Network with a LeNet Architecture consists of an input la
 Note, that the data directory only contains empty folders. The data is too large to be stored on GitHub. The directory only serve to illustrate how the data should be stored to run the script. Directions for downloading the data are provided below. 
 
 ```
-|-- data/                        # Directory containing data
+|-- data/                        # Directory containing data (see note above)
     |-- impressionist_example/   # Example directory of how data should be structured
         |-- training/            # Example training data directory
             |-- Matisse/         # Example subdirectory for artist 1
@@ -55,7 +55,7 @@ Note, that the data directory only contains empty folders. The data is too large
 
 ## Usage
 
-**!** The scripts have only been tested on Linux, using Python 3.6.9. 
+**!** The script has only been tested on Linux, using Python 3.6.9. 
 
 ### 1. Cloning the Repository and Installing Dependencies
 
@@ -126,7 +126,7 @@ __Output__ saved in `out/`:
 
 ## Results and Discussion
 
-Outputs of the model can be found in the `out/` directory of this repository. The classification report of the model trained over 10 epochs indicated a weighted F1 score of 0.59, while the model trained over 15 epochs led to a weighted F1 score of 0.51, when classifying paintings of Matisse, Gauguin and VanGogh. 
+Outputs of the model can be found in the `out/` directory of this repository. The [classification report](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_report.txt) of the model trained over 10 epochs indicated a weighted F1 score of 0.59, while the [classification report](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_report_1.txt) of the model trained over 15 epochs indicated a weighted F1 score of 0.51, when classifying paintings of Matisse, Gauguin and VanGogh. 
 
 Looking at the model history, it seems that the model trained over 15 epochs (displayed on the left) started overfitting on the training data, as the accuracy decreases for the test data, while it keeps increasing for the training data. Thus, in early stopping after 10 epochs (displayed on the right) could prevent this overfitting, and might thus lead to a higher F1 score for the model trained over 10 epochs. However, there still seems to be some variablity and noise in the validation accuracy and loss. 
 

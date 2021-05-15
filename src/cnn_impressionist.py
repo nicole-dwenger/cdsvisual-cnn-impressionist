@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 """
-This script trains a convolutional neural network (CNN) with a LeNet architecture on impressionist paintings, with the aim of classifying the artist of a painting. 
+This script trains a convolutional neural network (CNN) with a LeNet architecture 
+on impressionist paintings, with the aim of classifying the artist of a painting. 
 
 Input:
   - -a, --artists: list of str, <list-of-artists> (optional, default: [Matisse Gauguin VanGogh]
@@ -26,7 +27,7 @@ import argparse
 
 # Utility functions
 sys.path.append(os.path.join(".."))
-from utils.cnn_utils import (get_min_dim, preprocess_data,
+from utils.cnn_utils import (get_min_dim, preprare_Xy,
                              save_model_info, save_model_history, save_model_report)
              
 
@@ -85,8 +86,8 @@ def main():
     print(f"\n[INFO] Preparing data: all images will be resized to {img_dim}x{img_dim}.")
     
     # Prepare data, returns resized, normalised array of images, and binarised labels
-    X_train, y_train = preprocess_data(train_directory, img_dim, names)
-    X_test, y_test = preprocess_data(test_directory, img_dim, names)
+    X_train, y_train = preprare_Xy(train_directory, img_dim, names)
+    X_test, y_test = preprare_Xy(test_directory, img_dim, names)
    
     # --- CNN WITH LENET ARCHITECTURE ---
     
@@ -129,6 +130,8 @@ def main():
     # Evaluate CNN: generate predictions and compare to true labels
     predictions = model.predict(X_test, batch_size)
     report = classification_report(y_test.argmax(axis=1), predictions.argmax(axis=1), target_names = names)
+    
+    # --- OUTPUT ---
     
     # Save model summary, model history and classification report
     save_model_info(model, output_directory, "model_summary.txt", "model_plot.png")

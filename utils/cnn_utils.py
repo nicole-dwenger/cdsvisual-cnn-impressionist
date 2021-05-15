@@ -5,7 +5,7 @@ Utility script with functions used in cnn_impressionist.py script
 
 Functions in this script:
   - get_min_dim(): get minimum dimension of images in train and test directory
-  - preprocess_data(): preprocess data in train and test directory to retrieve images (X) and labels (y)
+  - preprare_Xy(): preprocess data in train and test directory to retrieve images (X) and labels (y)
   - unique_path(): enumerates filename, if file exists already 
   - save_model_summary(): save model summary and visualisation of model summary
   - save_model_history(): save plot of training history
@@ -37,13 +37,12 @@ from tensorflow.keras import backend as K
 # UTILITY FUNCTIONS ------------------------------------
 
 def get_min_dim(train_directory, test_directory, names):
-    """Getting dimension of the smallest image in test and train data
-    
+    """
+    Getting dimension of the smallest image in test and train data
     Input:
-    - train_dir, test_dir: paths to training and test directory, containing subdirectories with images
-    - names: names of subdirectories in train_dir and test_dir, here: refers to artist names
-    
-    Returns:
+      - train_dir, test_dir: paths to training and test directory, containing subdirectories with images
+      - names: names of subdirectories in train_dir and test_dir, here: refers to artist names
+    Returns: 
     - Minimum dimension of smallest image
     """
     # Create empty lists for dimensions
@@ -61,16 +60,15 @@ def get_min_dim(train_directory, test_directory, names):
     
     return min(dimensions)
 
-def preprocess_data(directory, img_dim, names):
-    """Create array of resized and normalised images (X) and binarised labels (y) 
-    
+def preprare_Xy(directory, img_dim, names):
+    """
+    Create array of resized and normalised images (X) and binarised labels (y) 
     Input: 
-    - directory: directory with subdirectories called names, containing images 
-    - img_dim: target size of images 
-    - names: names of subdirectories in directory, here: refers to artist names
-    
+      - directory: directory with subdirectories called names, containing images 
+      - img_dim: target size of images 
+      - names: names of subdirectories in directory, here: refers to artist names 
     Returns:
-    - X: array of resized, normalised images, y: binarised labels
+      - X: array of resized, normalised images, y: binarised labels
     """
     # Create empty array for images, with dimensions to which all images will be resized and 3 color channels
     X = np.empty((0, img_dim, img_dim, 3))
@@ -99,14 +97,13 @@ def preprocess_data(directory, img_dim, names):
     return X_norm, y_binary
 
 def unique_path(filepath):
-    """Creating unique filepath/filename by incrementing filename, if the filename exists already 
-    
+    """
+    Creating unique filepath/filename by incrementing filename, if the filename exists already 
     Input:
-    - desired filepath
-    
+      - desired filepath
     Returns:
-    - if path does not exist: desired filepath
-    - if path exists: desired filepath, enumerated
+      - if path does not exist: desired filepath
+      - if path exists: desired filepath, enumerated
     """ 
     # If the path does not exist, keep the original filepath
     if not os.path.exists(filepath):
@@ -125,13 +122,13 @@ def unique_path(filepath):
         return new_path
 
 def save_model_info(model, output_directory, filename_summary, filename_plot):
-    """Save model summary in .txt file and plot of model in .png
-    
+    """
+    Save model summary in .txt file and plot of model in .png
     Input:
-    - model: compiled model
-    - output_directory: path to output directory
-    - filename_summary: name of file to save summary in
-    - filename_plot: name of file to save visualisation of model
+      - model: compiled model
+      - output_directory: path to output directory
+      - filename_summary: name of file to save summary in
+      - filename_plot: name of file to save visualisation of model
     """
     # Define path fand filename for model summary
     out_summary = unique_path(os.path.join(output_directory, filename_summary))
@@ -146,13 +143,13 @@ def save_model_info(model, output_directory, filename_summary, filename_plot):
     plot_model(model, to_file = out_plot, show_shapes = True, show_layer_names = True)
      
 def save_model_history(history, epochs, output_directory, filename):
-    """Plotting the model history, i.e. loss/accuracy of the model during training
-    
+    """
+    Plotting the model history, i.e. loss/accuracy of the model during training
     Input: 
-    - history: model history
-    - epochs: number of epochs the model was trained on 
-    - output_directory: desired output directory
-    - filename: name of file to save history in
+      - history: model history
+      - epochs: number of epochs the model was trained on 
+      - output_directory: desired output directory
+      - filename: name of file to save history in
     """
     # Define output path
     out_history = unique_path(os.path.join(output_directory, filename))
@@ -172,12 +169,12 @@ def save_model_history(history, epochs, output_directory, filename):
     plt.savefig(out_history)
 
 def save_model_report(report, epochs, batch_size, output_directory, filename):
-    """Save report to output directory
-    
+    """
+    Save report to output directory
     Input: 
-    - report: model classifcation report
-    - output_directory: final output_directory
-    - filename: name of file to save report in
+      - report: model classifcation report
+      - output_directory: final output_directory
+      - filename: name of file to save report in
     """
     # Define output path and file for report
     report_out = unique_path(os.path.join(output_directory, filename))
