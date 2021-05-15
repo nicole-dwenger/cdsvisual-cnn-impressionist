@@ -1,10 +1,17 @@
-Classification report for CNN trained with 15 epochs and batchsize of 50:
+Classification report for CNN trained with 20 epochs and batchsize of 50:
               precision    recall  f1-score   support
 
-     Matisse       0.59      0.76      0.66        99
-     Gauguin       0.89      0.16      0.27        99
-     VanGogh       0.50      0.77      0.61        99
+      Renoir       0.40      0.31      0.35        99
+     Matisse       0.29      0.54      0.38        99
+    Pissarro       0.45      0.30      0.36        99
+      Hassam       0.33      0.27      0.30        99
+     VanGogh       0.53      0.34      0.42        99
+     Sargent       0.37      0.55      0.44        99
+       Degas       0.46      0.59      0.51        99
+       Monet       0.43      0.10      0.16        99
+     Gauguin       0.46      0.45      0.46        99
+     Cezanne       0.40      0.52      0.45        99
 
-    accuracy                           0.56       297
-   macro avg       0.66      0.56      0.51       297
-weighted avg       0.66      0.56      0.51       297
+    accuracy                           0.40       990
+   macro avg       0.41      0.40      0.38       990
+weighted avg       0.41      0.40      0.38       990

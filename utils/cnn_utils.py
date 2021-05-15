@@ -89,7 +89,8 @@ def preprare_Xy(directory, img_dim, names):
             y.append(name)
 
     # Normalize images
-    X_norm = (X.astype("float") / 255.)
+    #X_norm = (X.astype("float") / 255.)
+    X_norm = (X - X.min())/(X.max() - X.min())
     
     # Binarize labels
     lb = LabelBinarizer()

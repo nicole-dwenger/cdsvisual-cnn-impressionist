@@ -5,7 +5,7 @@ This script trains a convolutional neural network (CNN) with a LeNet architectur
 on impressionist paintings, with the aim of classifying the artist of a painting. 
 
 Input:
-  - -a, --artists: list of str, <list-of-artists> (optional, default: [Matisse Gauguin VanGogh]
+  - -a, --artists: list of str, <list-of-artists> (optional, default: [Matisse Gauguin VanGogh], ALL for all artists
   - -train, --train_data: str, <path-to-training-data> (optional, default: ../data/impressionist_subset/training/)
   - -test, --test_data: str, <path-to-test-data> (optional, default: ../data/impressionist_subset/validation/)
   - -e, --epochs: int, <number-of-epochs> (optional, default: 10)
@@ -63,31 +63,32 @@ def main():
                     required = False, default = 50)
     # Parse arguments
     args = vars(ap.parse_args())
-    names = args["artists"]
+    artists = args["artists"]
     train_directory = args["train_directory"]
     test_directory = args["test_directory"]
     epochs = args["epochs"]
     batch_size = args["batch_size"]
-    
-    # Create output directory
-    output_directory = os.path.join("..", "out")
-    if not os.path.exists(output_directory):
-        os.mkdir(output_directory)
         
+    # Get names, if ALL, use all names, otherwise only those specified
+    if artists == ["ALL"]:
+        label_names = os.listdir(os.path.join(train_directory))
+    else:
+        label_names = artists
+    
     # Print message
-    print(f"\n[INFO] Initialising classifcation of paintings from {names}.")
+    print(f"\n[INFO] Initialising classifcation of paintings from {label_names}.")
     
     # --- PREPARE DATA ---
     
     # Get minimum dimension of smallest image, used to resize all images accordingly
-    img_dim = get_min_dim(train_directory, test_directory, names)
+    img_dim = get_min_dim(train_directory, test_directory, label_names)
     
     # Print message
     print(f"\n[INFO] Preparing data: all images will be resized to {img_dim}x{img_dim}.")
     
     # Prepare data, returns resized, normalised array of images, and binarised labels
-    X_train, y_train = preprare_Xy(train_directory, img_dim, names)
-    X_test, y_test = preprare_Xy(test_directory, img_dim, names)
+    X_train, y_train = preprare_Xy(train_directory, img_dim, label_names)
+    X_test, y_test = preprare_Xy(test_directory, img_dim, label_names)
    
     # --- CNN WITH LENET ARCHITECTURE ---
     
@@ -95,7 +96,7 @@ def main():
     print(f"\n[INFO] Training CNN with LeNet Architecture with {epochs} epochs and a batch size of {batch_size}.")
     
     # Get number of classes
-    n_classes = len(names)
+    n_labels = len(label_names)
     
     # Define CNN: LeNet architecture
     model = Sequential()
@@ -116,7 +117,7 @@ def main():
     model.add(Activation("relu"))
 
     # Set 4: Output layer, with softmax classification, to predict 10 classes (10 artists)
-    model.add(Dense(n_classes))
+    model.add(Dense(n_labels))
     model.add(Activation("softmax"))
 
     # Compile CNN: using categorigical corrsentropy and stochastic gradient descent
@@ -129,9 +130,14 @@ def main():
     
     # Evaluate CNN: generate predictions and compare to true labels
     predictions = model.predict(X_test, batch_size)
-    report = classification_report(y_test.argmax(axis=1), predictions.argmax(axis=1), target_names = names)
+    report = classification_report(y_test.argmax(axis=1), predictions.argmax(axis=1), target_names = label_names)
     
     # --- OUTPUT ---
+    
+    # Create output directory
+    output_directory = os.path.join("..", "out")
+    if not os.path.exists(output_directory):
+        os.mkdir(output_directory)
     
     # Save model summary, model history and classification report
     save_model_info(model, output_directory, "model_summary.txt", "model_plot.png")
