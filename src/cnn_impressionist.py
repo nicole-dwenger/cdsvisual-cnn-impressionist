@@ -44,7 +44,7 @@ from sklearn.metrics import classification_report
 
 def main():
     
-    # --- ARUGMENT PARSER AND OUTPUT DIRECTORY ---
+    # --- ARUGMENT PARSER ---
     
     ap = argparse.ArgumentParser()
     ap.add_argument("-a", "--artists", nargs="+", help = "List of artists to train model on",
@@ -69,7 +69,9 @@ def main():
     epochs = args["epochs"]
     batch_size = args["batch_size"]
         
-    # Get names, if ALL, use all names, otherwise only those specified
+    # --- PREPARE DATA ---
+    
+    # Get names of artists to load data, if ALL, use all names, otherwise only those specified
     if artists == ["ALL"]:
         label_names = os.listdir(os.path.join(train_directory))
     else:
@@ -77,8 +79,6 @@ def main():
     
     # Print message
     print(f"\n[INFO] Initialising classifcation of paintings from {label_names}.")
-    
-    # --- PREPARE DATA ---
     
     # Get minimum dimension of smallest image, used to resize all images accordingly
     img_dim = get_min_dim(train_directory, test_directory, label_names)

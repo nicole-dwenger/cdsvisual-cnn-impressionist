@@ -132,7 +132,7 @@ Outputs of the model can be found in the `out/` directory of this repository. Th
 Looking at the model history, it seems that the model trained over 20 epochs (displayed on the right) started overfitting on the training data, as the accuracy does not increase for the test data, while it keeps increasing for the training data. Similarly, the loss for the test data actually starts increasing from epoch 10, while it decreases for the training data. This is likely the reason why the model did not improve much when running it for 20 epochs. Thus, in early stopping after 10 epochs (displayed on the left) could prevent this overfitting. Other measures, such as drop out layers could be also be considered to further prevent overfitting.
 
 
- 10 epochs | 15 epochs
+ 10 epochs | 20 epochs
 :-------------------------:|:-------------------------:
 ![](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history.png)  |  ![](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_history_1.png)
 
