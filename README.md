@@ -17,12 +17,12 @@ The data used to train and evaluate the model was extracted from [Kaggle](https:
 To train the CNN, it was required to resize all images to be of same size. To preserve as much as possible, the smallest dimension of the smallest image was found and used to resize all images to a square of this dimension. For the subset of data used for this project, this meant that all images were resized to be of size 277x277. Further, images were normalised. The corresponding labels of the images (artists) were extracted, and binarised.
  
 ### Convolutional Neural Network with LeNet Architecture
-A Convolutional Neural Network with a LeNet Architecture consists of an input layer, followed by 2 sets of **Convolutional Layer - Activation Layer - Pooling layer**, a flattening layer, two fully connected layers and finally a softmax classifier to predict the artist. The model was trained on a batch size of 50, once over 10 epochs and once over 15 epochs. As optimiser, stochastic gradient descent with a learning rate of 0.01 was used. The [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.txt) and a [visualisation of the model](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png) used for this project can be found in the out/ directory in this repository.
+A Convolutional Neural Network with a LeNet Architecture consists of an input layer, followed by 2 sets of **Convolutional Layer - Activation Layer - Pooling layer**, a flattening layer, two fully connected layers and finally a softmax classifier to predict the artist. The model was trained on a batch size of 50, once over 10 epochs and once over 15 epochs. As optimiser, stochastic gradient descent with a learning rate of 0.01 was used. The [model summary](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_summary.txt) and a [visualisation of the model](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_plot.png) used for this project can be found in the `out/` directory in this repository.
 
 
 ## Repository Structure
 
-Note, that the data directory only contains empty folders. The data is too large to be stored on GitHub. The directory only serve to illustrate how the data should be stored to run the script. Directions for downloading the data are provided below. 
+Note, that the `data/` directory only contains empty folders. The data is too large to be stored on GitHub. The directory only serve to illustrate how the data should be stored to run the script. Directions for downloading the data are provided below. 
 
 ```
 |-- data/                        # Directory containing data (see note above)

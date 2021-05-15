@@ -43,7 +43,7 @@ def get_min_dim(train_directory, test_directory, names):
       - train_dir, test_dir: paths to training and test directory, containing subdirectories with images
       - names: names of subdirectories in train_dir and test_dir, here: refers to artist names
     Returns: 
-    - Minimum dimension of smallest image
+      - Minimum dimension of smallest image
     """
     # Create empty lists for dimensions
     dimensions = []
@@ -68,7 +68,8 @@ def preprare_Xy(directory, img_dim, names):
       - img_dim: target size of images 
       - names: names of subdirectories in directory, here: refers to artist names 
     Returns:
-      - X: array of resized, normalised images, y: binarised labels
+      - X: array of resized, normalised images, 
+      - y: binarised labels
     """
     # Create empty array for images, with dimensions to which all images will be resized and 3 color channels
     X = np.empty((0, img_dim, img_dim, 3))
