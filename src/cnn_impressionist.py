@@ -47,7 +47,7 @@ def main():
     # --- ARUGMENT PARSER ---
     
     ap = argparse.ArgumentParser()
-    ap.add_argument("-a", "--artists", nargs="+", help = "List of artists to train model on",
+    ap.add_argument("-a", "--artists", nargs="+", help = "List of artists to train model on, at least 3 or ALL",
                     required = False, default = ["ALL"])
     # Input option for path to training data
     ap.add_argument("-train", "--train_directory", type = str, help = "Path to the training data directory",
