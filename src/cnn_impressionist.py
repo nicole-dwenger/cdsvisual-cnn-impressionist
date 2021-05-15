@@ -5,7 +5,7 @@ This script trains a convolutional neural network (CNN) with a LeNet architectur
 on impressionist paintings, with the aim of classifying the artist of a painting. 
 
 Input:
-  - -a, --artists: list of str, <list-of-artists> (optional, default: [Matisse Gauguin VanGogh], ALL for all artists
+  - -a, --artists: list of str, <list-of-artists>, e.g. Matisse VanGogh Gauguin (optional, default: ALL)
   - -train, --train_data: str, <path-to-training-data> (optional, default: ../data/impressionist_subset/training/)
   - -test, --test_data: str, <path-to-test-data> (optional, default: ../data/impressionist_subset/validation/)
   - -e, --epochs: int, <number-of-epochs> (optional, default: 10)
@@ -48,7 +48,7 @@ def main():
     
     ap = argparse.ArgumentParser()
     ap.add_argument("-a", "--artists", nargs="+", help = "List of artists to train model on",
-                    required = False, default = ["Matisse", "Gauguin", "VanGogh"])
+                    required = False, default = ["ALL"])
     # Input option for path to training data
     ap.add_argument("-train", "--train_directory", type = str, help = "Path to the training data directory",
                     required = False, default = "../data/impressionist/training/")

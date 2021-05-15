@@ -5,7 +5,7 @@
 ## Description
 
 > This project relates to Assignment 5: Multi-class Classification of Cultural Image Data
-of the course Visual Analytics.
+> of the course Visual Analytics.
 
 The aim of this project was to classify complex, cultural image data. Specifically, a dataset of impressionist paintings was used to investigate whether it is possible to classify paintings by their artist. This may be relevant to e.g. sort a large collection of images or to predict the artist of an image where the artist is unknown. 
 
