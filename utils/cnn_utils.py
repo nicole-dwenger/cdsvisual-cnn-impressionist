@@ -48,12 +48,13 @@ def get_min_dim(train_directory, test_directory, names):
     # Create empty lists for dimensions
     dimensions = []
     
-    # Walk through directories 
+    # For each name, i.e. artist 
     for name in names:
-        
+        # Get all image paths in train and test directory
         img_paths = (glob.glob(os.path.join(train_directory, name, "*.jpg")) +
                      glob.glob(os.path.join(test_directory, name, "*.jpg")))
         
+        # Get the size of each image and append to list
         for path in img_paths:
             img = Image.open(path)
             dimensions.extend(img.size)                               
@@ -88,8 +89,7 @@ def preprare_Xy(directory, img_dim, names):
             X = np.vstack([X, img_array])
             y.append(name)
 
-    # Normalize images
-    #X_norm = (X.astype("float") / 255.)
+    # Normalize images using min max regularisation
     X_norm = (X - X.min())/(X.max() - X.min())
     
     # Binarize labels

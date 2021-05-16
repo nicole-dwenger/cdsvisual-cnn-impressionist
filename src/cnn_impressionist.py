@@ -95,7 +95,7 @@ def main():
     # Print message
     print(f"\n[INFO] Training CNN with LeNet Architecture with {epochs} epochs and a batch size of {batch_size}.")
     
-    # Get number of classes
+    # Get number of classes for output layer
     n_labels = len(label_names)
     
     # Define CNN: LeNet architecture
@@ -116,7 +116,7 @@ def main():
     model.add(Dense(500))
     model.add(Activation("relu"))
 
-    # Set 4: Output layer, with softmax classification, to predict 10 classes (10 artists)
+    # Set 4: Output layer, with softmax classification, to predict n classes (n artists)
     model.add(Dense(n_labels))
     model.add(Activation("softmax"))
 
