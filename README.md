@@ -9,7 +9,7 @@
 
 The aim of this project was to classify complex, cultural image data. Specifically, a dataset of impressionist paintings was used to investigate whether it is possible to classify paintings by their artist. This may be relevant to e.g. sort a large collection of images or to predict the artist of an image where the artist is unknown. 
 
-For the multi-class classification task, a Convolutional Neural Network (CNN) with a LeNet Architecture was build, trained and evaluated. Convolutional Neural Networks are especially useful for visual analytics, as they can take into account the three channels of coloured images, and identify more complex features (through convolutional kernels), while reducing dimensionality of the feature space (through pooling layers).  
+For the multi-class classification task, a Convolutional Neural Network (CNN) with a LeNet Architecture was build, trained and evaluated. Convolutional Neural Networks are especially useful for visual analytics, as they can take into account the three channels of coloured images, and identify more complex features (through convolutional kernels), while reducing dimensionality of the feature space (through pooling layers). While more complex or pre-trained CNNs could also be used for this classification task, the aim of this project was to illustrate how to build and train a simple CNN from scratch. 
  
 
 ## Methods
@@ -60,7 +60,7 @@ Note, that the `data/` directory only contains empty folders. The data is too la
 
 ### 1. Cloning the Repository and Installing Dependencies
 
-To run the scripts, I recommend cloning this repository and installing necessary dependencies in a virtual environment. The bash script `create_venv.sh` can be used to create this virtual environment with all necessary dependencies, listed in the `requirements.txt` file. The following commands can be used:
+To run the scripts, I recommend cloning this repository and installing necessary dependencies in a virtual environment. The bash script `create_venv.sh` can be used to create a virtual environment called `venv_cnn` with all necessary dependencies, listed in the `requirements.txt` file. The following commands can be used:
 
 ```bash
 # cloning the repository
@@ -77,8 +77,7 @@ source venv_cnn/bin/activate
 ```
 
 ### 2. Data
-The data was too large to be stored in this repository. If you wish to reproduce the results of this project, I recommend downloading the *training* and *validation* folders of the impressionist paintings dataset from [kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data), and saving these in `data/impressionist`. Optimally, the structure should be identical to the structure illustrated in the repository structure displayed above. When running the script, you can adjust the `-train` and `-test` parameters to represent the directories containing the training and validation data, i.e., in the repository structure above this would be `../data/impressionist_example/training/` and `../data/impressionist_example/validation/`. For this project, I have trained the model on the entire set of 400 training and 100 testing images for all 10 artists. 
-
+The data used for this project was too large, to store on GitHub. Thus, the `data/` directory in this repository, only contains empty subdirectories, to illustrate how the data should be stored to run the script (see Repository Structure above). To reproduce the results, the training and validation folders of the impressionist paintings dataset from [kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data), should be downloaded and saved in a directory called `data/impressionist/`. When running the script, the `-train` and `-test` parameters can be adjusted to represent the directories containing the training and validation data. In the repository structure displayed above, this would be `../data/impressionist_example/training` and `../data/impressionist_example/validation`. For this project, the model on the entire set of 400 training and 100 testing images for the 10 artists. 
 
 ### 3. Running the Script 
 
@@ -129,7 +128,7 @@ __Output__ saved in `out/`:
 
 Outputs of the model can be found in the `out/` directory of this repository. The [classification report](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_report.txt) of the model trained over 10 epochs indicated a weighted F1 score of 0.35, while the [classification report](https://github.com/nicole-dwenger/cdsvisual-cnn-impressionist/blob/master/out/model_report_1.txt) of the model trained over 20 epochs indicated a weighted F1 score of 0.38, when classifying paintings of the 10 artists.
 
-Looking at the model history, it seems that the model trained over 20 epochs (displayed on the right) started overfitting on the training data, as the accuracy does not increase for the test data, while it keeps increasing for the training data. Similarly, the loss for the test data actually starts increasing from epoch 10, while it decreases for the training data. This is likely the reason why the model did not improve much when running it for 20 epochs. Thus, in early stopping after 10 epochs (displayed on the left) could prevent this overfitting. Other measures, such as drop out layers could be also be considered to further prevent overfitting.
+Looking at the model history, it seems that the model trained over 20 epochs (displayed on the right) started overfitting on the training data, as the accuracy does not increase for the test data, while it keeps increasing for the training data. Similarly, the loss for the test data actually starts increasing from epoch 10, while it decreases for the training data. This is likely the reason why the model did not improve much when running it for 20 epochs. Thus, early stopping after 10 epochs (displayed on the left) could reduce this overfitting. Other measures, such as drop out layers could be also be considered to further reduce overfitting. Further, it could be considered to use grid search, to find optimal parameters to run the model on, rather than exploring it by running the model again and again. I did not do this for this project, as it would have taken a long time to run the model. 
 
 
  10 epochs | 20 epochs

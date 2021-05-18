@@ -69,7 +69,7 @@ def preprare_Xy(directory, img_dim, names):
       - img_dim: target size of images 
       - names: names of subdirectories in directory, here: refers to artist names 
     Returns:
-      - X: array of resized, normalised images, 
+      - X: array of resized, scaled images
       - y: binarised labels
     """
     # Create empty array for images, with dimensions to which all images will be resized and 3 color channels
@@ -90,13 +90,13 @@ def preprare_Xy(directory, img_dim, names):
             y.append(name)
 
     # Normalize images using min max regularisation
-    X_norm = (X - X.min())/(X.max() - X.min())
+    X_scaled = (X - X.min())/(X.max() - X.min())
     
     # Binarize labels
     lb = LabelBinarizer()
     y_binary = lb.fit_transform(y)
    
-    return X_norm, y_binary
+    return X_scaled, y_binary
 
 def unique_path(filepath):
     """
