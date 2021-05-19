@@ -4,8 +4,7 @@
 
 ## Description
 
-> This project relates to Assignment 5: Multi-class Classification of Cultural Image Data
-> of the course Visual Analytics.
+> This project relates to Assignment 5: Classification of Cultural Image Data of the course Visual Analytics.
 
 The aim of this project was to classify complex, cultural image data. Specifically, a dataset of impressionist paintings was used to investigate whether it is possible to classify paintings by their artist. This may be relevant to e.g. sort a large collection of images or to predict the artist of an image where the artist is unknown. 
 
@@ -77,7 +76,7 @@ source venv_cnn/bin/activate
 ```
 
 ### 2. Data
-The data used for this project was too large, to store on GitHub. Thus, the `data/` directory in this repository, only contains empty subdirectories, to illustrate how the data should be stored to run the script (see Repository Structure above). To reproduce the results, the training and validation folders of the impressionist paintings dataset from [kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data), should be downloaded and saved in a directory called `data/impressionist/`. When running the script, the `-train` and `-test` parameters can be adjusted to represent the directories containing the training and validation data. In the repository structure displayed above, this would be `../data/impressionist_example/training` and `../data/impressionist_example/validation`. For this project, the model on the entire set of 400 training and 100 testing images for the 10 artists. 
+The data used for this project was too large, to store on GitHub. Thus, the `data/` directory in this repository, only contains empty subdirectories, to illustrate how the data should be stored to run the script (see Repository Structure above). To reproduce the results, the training and validation folders of the impressionist paintings dataset from [kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data), should be downloaded and saved in a directory called `data/impressionist/`. When running the script, the `-train` and `-test` parameters can be adjusted to represent the directories containing the training and validation data. In the repository structure displayed above, this would be `../data/impressionist_example/training` and `../data/impressionist_example/validation`. For this project, the model was trained on the entire set of 400 training and 100 testing images for the 10 artists. 
 
 ### 3. Running the Script 
 
@@ -97,7 +96,7 @@ python3 cnn_impressionist.py -train data/training/ -test data/validation/ -a Mon
 __Parameters__:
 - `-a, --artists`: *list of str, seperated with space, optional, default:* `ALL`\
    List of artist names for which the paintings should be included in the classifier. Should be at least 3, and should their 
-   corresponding train and test images should be stored in a directory named by the artist in `training/` and `validation/` directories. Use `ALL` to take all artists for which directories are in `training/` (and should also be in `validation/`.
+   corresponding train and test images should be stored in a directory named by the artist in the specified training and test (here called validation) directories. Use `ALL` to take all artists for which directories with images are in specified training and test directories. 
    
 - `-train, --train_directory`: *str, optional, default:* `../data/impressionist/training/`\
    Path to directory containing training data. In this directory, images should be stored in subdirectories, one for each artist.

@@ -27,7 +27,7 @@ import argparse
 
 # Utility functions
 sys.path.append(os.path.join(".."))
-from utils.cnn_utils import (get_min_dim, preprare_Xy,
+from utils.cnn_utils import (get_label_names, get_min_dim, preprare_Xy,
                              save_model_info, save_model_history, save_model_report)
              
 
@@ -73,7 +73,7 @@ def main():
     
     # Get names of artists to load data, if ALL, use all names, otherwise only those specified
     if artists == ["ALL"]:
-        label_names = os.listdir(os.path.join(train_directory))
+        label_names = get_label_names(train_directory)
     else:
         label_names = artists
     

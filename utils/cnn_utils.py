@@ -4,6 +4,7 @@
 Utility script with functions used in cnn_impressionist.py script 
 
 Functions in this script:
+  - get_label_names(): get all the names of subdirectories corresponding to artists in the train directory
   - get_min_dim(): get minimum dimension of images in train and test directory
   - preprare_Xy(): preprocess data in train and test directory to retrieve images (X) and labels (y)
   - unique_path(): enumerates filename, if file exists already 
@@ -35,6 +36,25 @@ from tensorflow.keras import backend as K
 
 
 # UTILITY FUNCTIONS ------------------------------------
+
+def get_label_names(directory):
+    """
+    Get names of labels (artists) by finding the directory names
+    Input:
+      - directory: directory where subdirectories of artists are stored
+    Returns:
+      - list of names of subdirectories (corresponding to artists here)
+    """
+    # Create empty target list for label names
+    label_names = []
+    # Get all file names in the directory
+    for name in os.listdir(directory):
+        # If it is not a hidden file
+        if not name.startswith('.'):
+            # Append name to label_names
+            label_names.append(name)
+            
+    return label_names
 
 def get_min_dim(train_directory, test_directory, names):
     """
