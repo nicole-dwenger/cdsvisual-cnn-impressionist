@@ -40,6 +40,50 @@ from tensorflow.keras import backend as K
 from sklearn.metrics import classification_report
 
 
+# HELPER FUNCTION --------------------------------
+
+def create_LeNet(img_dim, n_labels):
+    """
+    Create CNN with LeNet Architecture
+      - Set 1: Conv2D - Actication - Pooling
+      - Set 2: Conv2D - Activation - Pooling
+      - Set 3: Flatten - Fully Connected - Activation
+      - Set 4: Output layer for classification
+    Input: 
+      - img_dim: size of the input images (X)
+      - n_labels: number of unique labels (y) to classify
+    Returns:
+      - model: compiled CNN with LeNet architecture
+    """
+    # Initialise sequential model
+    model = Sequential()
+
+    # Set 1: Conv2D-Activation-MaxPool
+    model.add(Conv2D(32, (3, 3), padding="same", input_shape=(img_dim, img_dim, 3)))
+    model.add(Activation("relu"))
+    model.add(MaxPooling2D(pool_size=(2,2), strides=(2,2)))
+
+    # Set 2: Con2D-Activation-MaxPool
+    model.add(Conv2D(50, (5, 5), padding = "same"))
+    model.add(Activation("relu"))
+    model.add(MaxPooling2D(pool_size=(2,2), strides=(2,2)))
+
+    # Set 3: Fully connected layer, with relu activation
+    model.add(Flatten())
+    model.add(Dense(500))
+    model.add(Activation("relu"))
+
+    # Set 4: Output layer, with softmax classification, to predict n classes (n artists)
+    model.add(Dense(n_labels))
+    model.add(Activation("softmax"))
+
+    # Compile CNN: using categorigical corrsentropy and stochastic gradient descent
+    model.compile(loss="categorical_crossentropy", 
+                  optimizer=SGD(lr=0.01), metrics=["accuracy"])
+    
+    return model
+
+
 # MAIN FUNCTION ------------------------------------
 
 def main():
@@ -76,6 +120,9 @@ def main():
         label_names = get_label_names(train_directory)
     else:
         label_names = artists
+        
+    # Get number of unique labels
+    n_labels = len(label_names)
     
     # Print message
     print(f"\n[INFO] Initialising classifcation of paintings from {label_names}.")
@@ -95,34 +142,8 @@ def main():
     # Print message
     print(f"\n[INFO] Training CNN with LeNet Architecture with {epochs} epochs and a batch size of {batch_size}.")
     
-    # Get number of classes for output layer
-    n_labels = len(label_names)
-    
-    # Define CNN: LeNet architecture
-    model = Sequential()
-
-    # Set 1: Conv2D-Activation-MaxPool
-    model.add(Conv2D(32, (3, 3), padding = "same", input_shape = (img_dim, img_dim, 3)))
-    model.add(Activation("relu"))
-    model.add(MaxPooling2D(pool_size = (2,2), strides=(2,2)))
-
-    # Set 2: Con2D-Activation-MaxPool
-    model.add(Conv2D(50, (5, 5), padding = "same"))
-    model.add(Activation("relu"))
-    model.add(MaxPooling2D(pool_size = (2,2), strides = (2,2)))
-
-    # Set 3: Fully connected layer, with relu activation
-    model.add(Flatten())
-    model.add(Dense(500))
-    model.add(Activation("relu"))
-
-    # Set 4: Output layer, with softmax classification, to predict n classes (n artists)
-    model.add(Dense(n_labels))
-    model.add(Activation("softmax"))
-
-    # Compile CNN: using categorigical corrsentropy and stochastic gradient descent
-    model.compile(loss = "categorical_crossentropy", 
-                  optimizer = SGD(lr=0.01), metrics = ["accuracy"])
+    # Define and complile CNN with LeNet architecture
+    model = create_LeNet(img_dim, n_labels)
     
     # Train CNN: use training data to learn weights, using defined batch_size and epochs
     history = model.fit(X_train, y_train, validation_data = (X_test, y_test), 
@@ -130,7 +151,12 @@ def main():
     
     # Evaluate CNN: generate predictions and compare to true labels
     predictions = model.predict(X_test, batch_size)
-    report = classification_report(y_test.argmax(axis=1), predictions.argmax(axis=1), target_names = label_names)
+    report = classification_report(y_test.argmax(axis=1), 
+                                   predictions.argmax(axis=1), 
+                                   target_names = label_names)
+    
+    # Print classification report
+    print(f"Classification report:\n {report}")
     
     # --- OUTPUT ---
     
@@ -144,11 +170,8 @@ def main():
     save_model_history(history, epochs, output_directory, "model_history.png")
     save_model_report(report, epochs, batch_size, output_directory, "model_report.txt")
     
-    # Print classification report
-    print(f"Classification report:\n {report}")
-    
     # Print message
-    print(f"\n[INFO] All done!")
+    print(f"\n[INFO] All done! Output saved in {output_directory}")
      
     
 if __name__=="__main__":

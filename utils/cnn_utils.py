@@ -43,7 +43,7 @@ def get_label_names(directory):
     Input:
       - directory: directory where subdirectories of artists are stored
     Returns:
-      - list of names of subdirectories (corresponding to artists here)
+      - label_names: list of names of subdirectories (corresponding to artists here)
     """
     # Create empty target list for label names
     label_names = []
