@@ -1,6 +1,6 @@
 # CNN on Cultural Image Data
 
-[Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion)
+[Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion) | [Contact](#contact)
 
 ## Description
 
@@ -137,7 +137,8 @@ Looking at the model history, it seems that the model trained over 20 epochs (di
 
 Rather than using training a CNN from scratch, it could improve classification to use transfer learning, meaning pretrained models, such as VGG16 to classify these images. The pretrained models have been trained to extract relevant features from a large collection of images. Thus, the CNN (as in this project) does not need to be trained from scratch, but only the last fully connected layers would need to be re-trained to classify the artists. The aim of this project, however was to also indicate how a CNN can be build and trained from scratch. 
 
-
+## Contact
+If you have any questions, feel free to contact me at 201805351@post.au.dk.
 
 
 
