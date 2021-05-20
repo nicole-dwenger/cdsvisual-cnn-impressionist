@@ -22,17 +22,23 @@ Output (saved in out/)
 
 # Basics
 import os
-import sys
 import argparse
+from tqdm import tqdm
+import glob
+import numpy as np
 
 # Utility functions
+import sys
 sys.path.append(os.path.join(".."))
-from utils.cnn_utils import (get_label_names, get_min_dim, preprare_Xy,
+from utils.cnn_utils import (get_label_names, get_min_dim,
                              save_model_info, save_model_history, save_model_report)
-             
+           
+# Sklean for preprocessing
+from sklearn.preprocessing import LabelBinarizer
 
 # CNN Model
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # hide warnings
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Activation, Flatten, Dense
 from tensorflow.keras.optimizers import SGD
@@ -41,6 +47,45 @@ from sklearn.metrics import classification_report
 
 
 # HELPER FUNCTION --------------------------------
+# Functions which are important to the core of the script
+# Find other utility functions in utils/cnn_utils
+
+def preprare_Xy(directory, img_dim, names):
+    """
+    Create array of resized and normalised images (X) and binarised labels (y) 
+    Input: 
+      - directory: directory with subdirectories called names, containing images 
+      - img_dim: target size of images 
+      - names: names of subdirectories in directory, here: refers to artist names 
+    Returns:
+      - X: array of resized, scaled images
+      - y: binarised labels
+    """
+    # Create empty array for images, with dimensions to which all images will be resized and 3 color channels
+    X = np.empty((0, img_dim, img_dim, 3))
+    # Create empty list for corresponding labels
+    y = []
+    
+    # For each label name (artist)
+    for name in names:
+        # Get the paths of all images 
+        img_paths = glob.glob(os.path.join(directory, name, "*.jpg"))
+        
+        # For each image for the given artist, load the image and append image array and label
+        for img_path in tqdm(img_paths):
+            img = load_img(img_path, target_size=(img_dim,img_dim))
+            img_array = np.array([img_to_array(img)])
+            X = np.vstack([X, img_array])
+            y.append(name)
+
+    # Normalize images using min max regularisation
+    X_scaled = (X - X.min())/(X.max() - X.min())
+    
+    # Binarize labels
+    lb = LabelBinarizer()
+    y_binary = lb.fit_transform(y)
+   
+    return X_scaled, y_binary
 
 def create_LeNet(img_dim, n_labels):
     """

@@ -6,7 +6,6 @@ Utility script with functions used in cnn_impressionist.py script
 Functions in this script:
   - get_label_names(): get all the names of subdirectories corresponding to artists in the train directory
   - get_min_dim(): get minimum dimension of images in train and test directory
-  - preprare_Xy(): preprocess data in train and test directory to retrieve images (X) and labels (y)
   - unique_path(): enumerates filename, if file exists already 
   - save_model_summary(): save model summary and visualisation of model summary
   - save_model_history(): save plot of training history
@@ -26,11 +25,9 @@ from contextlib import redirect_stdout
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import LabelBinarizer
 
 # Tensorflow tools
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # hide warnings
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.utils import plot_model
 from tensorflow.keras import backend as K
 
@@ -80,43 +77,6 @@ def get_min_dim(train_directory, test_directory, names):
             dimensions.extend(img.size)                               
     
     return min(dimensions)
-
-def preprare_Xy(directory, img_dim, names):
-    """
-    Create array of resized and normalised images (X) and binarised labels (y) 
-    Input: 
-      - directory: directory with subdirectories called names, containing images 
-      - img_dim: target size of images 
-      - names: names of subdirectories in directory, here: refers to artist names 
-    Returns:
-      - X: array of resized, scaled images
-      - y: binarised labels
-    """
-    # Create empty array for images, with dimensions to which all images will be resized and 3 color channels
-    X = np.empty((0, img_dim, img_dim, 3))
-    # Create empty list for corresponding labels
-    y = []
-    
-    # For each label name (artist)
-    for name in names:
-        # Get the paths of all images 
-        img_paths = glob.glob(os.path.join(directory, name, "*.jpg"))
-        
-        # For each image for the given artist, load the image and append image array and label
-        for img_path in tqdm(img_paths):
-            img = load_img(img_path, target_size=(img_dim,img_dim))
-            img_array = np.array([img_to_array(img)])
-            X = np.vstack([X, img_array])
-            y.append(name)
-
-    # Normalize images using min max regularisation
-    X_scaled = (X - X.min())/(X.max() - X.min())
-    
-    # Binarize labels
-    lb = LabelBinarizer()
-    y_binary = lb.fit_transform(y)
-   
-    return X_scaled, y_binary
 
 def unique_path(filepath):
     """
