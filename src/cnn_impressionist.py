@@ -18,7 +18,7 @@ Output (saved in out/)
   - model_report.txt: classification report of model, also printed to command line 
 """
 
-# LIBRARIES ------------------------------------
+# LIBRARIES ---------------------------------------------------
 
 # Basics
 import os
@@ -46,7 +46,7 @@ from tensorflow.keras import backend as K
 from sklearn.metrics import classification_report
 
 
-# HELPER FUNCTION --------------------------------
+# HELPER FUNCTIONS --------------------------------------------
 # Functions which are important to the core of the script
 # Find other utility functions in utils/cnn_utils
 
@@ -129,7 +129,7 @@ def create_LeNet(img_dim, n_labels):
     return model
 
 
-# MAIN FUNCTION ------------------------------------
+# MAIN FUNCTION -----------------------------------------------
 
 def main():
     
