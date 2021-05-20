@@ -75,6 +75,16 @@ bash create_venv.sh
 source venv_cnn/bin/activate
 ```
 
+If you run into any issues with installing packages from the `requirements.txt` you can also install/uninstall packages manually in the activated virtual envioronment using the following commands: 
+
+```bash
+# example: install tensorflow
+pip install tensorflow
+
+# example: uninstall tensorflow
+pip uninstall tensorflow
+```
+
 ### 2. Data
 The data used for this project was too large, to store on GitHub. Thus, the `data/` directory in this repository, only contains empty subdirectories, to illustrate how the data should be stored to run the script (see Repository Structure above). To reproduce the results, the training and validation folders of the impressionist paintings dataset from [kaggle](https://www.kaggle.com/delayedkarma/impressionist-classifier-data), should be downloaded and saved in a directory called `data/impressionist/`. When running the script, the `-train` and `-test` parameters can be adjusted to represent the directories containing the training and validation data. In the repository structure displayed above, this would be `../data/impressionist_example/training` and `../data/impressionist_example/validation`. For this project, the model was trained on the entire set of 400 training and 100 testing images for the 10 artists. 
 
